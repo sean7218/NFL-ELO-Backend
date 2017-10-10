@@ -26,7 +26,7 @@ def jsondata(name):
 def get_json(name):
     """get root working directory and load json file."""
     working_directory = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(working_directory, "static", name)
+    json_url = os.path.join(working_directory, "app/static/data", name)
     data = json.load(open(json_url))
     return data
 
