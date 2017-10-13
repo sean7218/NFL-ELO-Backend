@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Welcome, Menu }  from "./menu";
+
 // First Method Creating a Component
 // class AppS extends React.Component {
 //   render() {
@@ -62,11 +64,18 @@ import React from "react";
 //   }
 // }
 
-const Widget = (props) =>  <input type="text" onChange={props.update} />
+// const Widget = (props) =>  <input type="text" onChange={props.update} />
   
 
 export default class App extends React.Component {
   render () {
-    return <p> Hello React!</p>;
+    return (
+      <div>
+          <Welcome />
+          <Welcome />
+          <Menu name="Sean Zhang" />
+      </div>
+
+    );
   }
 }
