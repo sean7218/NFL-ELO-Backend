@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Welcome, Menu }  from "./menu";
+import { Welcome, Menu, Boards }  from "./menu";
 
 // First Method Creating a Component
 // class AppS extends React.Component {
@@ -74,6 +74,7 @@ export default class App extends React.Component {
           <Welcome />
           <Welcome />
           <Menu name="Sean Zhang" />
+          <Boards />
       </div>
 
     );

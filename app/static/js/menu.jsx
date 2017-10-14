@@ -17,6 +17,16 @@ export const Menu = (props) => {
     );
 }
 
-
+export function Boards(props) {
+    const boards = [1, 2, 3, 4, 5];
+    const listBoards = boards.map((num)=>{
+        <li key={num.toString()}>{num}</li>
+    });
+    return (
+        <ul>
+            {listBoards}
+        </ul>
+    );
+}
 
 
