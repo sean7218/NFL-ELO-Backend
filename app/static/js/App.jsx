@@ -1,6 +1,7 @@
 import React from "react";
+import ReactDOM from "react-dom";
+import { Welcome, Menu, Boards, NavbarInstance }  from "./menu";
 
-import { Welcome, Menu, Boards }  from "./menu";
 
 // First Method Creating a Component
 // class AppS extends React.Component {
@@ -65,16 +66,19 @@ import { Welcome, Menu, Boards }  from "./menu";
 // }
 
 // const Widget = (props) =>  <input type="text" onChange={props.update} />
-  
+
+
+
+const numbers = [1, 2, 3, 4, 5];
 
 export default class App extends React.Component {
   render () {
     return (
       <div>
-          <Welcome />
+          <NavbarInstance />
           <Welcome />
           <Menu name="Sean Zhang" />
-          <Boards />
+          <Boards numbers={numbers} />
       </div>
 
     );
