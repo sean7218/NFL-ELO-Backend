@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Welcome, Menu, Boards, NavbarInstance }  from "./menu";
-
+import { Welcome, Menu, Boards, Appbar, Documents}  from "./menu";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 // First Method Creating a Component
 // class AppS extends React.Component {
@@ -75,10 +75,13 @@ export default class App extends React.Component {
   render () {
     return (
       <div>
-          <NavbarInstance />
+          <MuiThemeProvider>
+            <Appbar />
+          </MuiThemeProvider>
           <Welcome />
           <Menu name="Sean Zhang" />
           <Boards numbers={numbers} />
+          <Documents />
       </div>
 
     );
