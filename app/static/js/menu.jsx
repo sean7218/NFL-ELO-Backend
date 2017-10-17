@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button, Nav, NavItem, Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem} from 'react-bootstrap';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
@@ -70,49 +71,106 @@ export class Documents extends React.Component {
             name: "",
             desc: "",
             rev: 1.0,
-            docs: this.props.docs,
+            items: this.props.docs
         };
         this.handleCreate = this.handleCreate.bind(this);
         this.handleRead = this.handleRead.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleFilter = this.handleFilter.bind(this);
+        this.handleResetFilter = this.handleResetFilter.bind(this);
     }
 
-    handleCreate(){
-        alert("Handling Add Document");
-        let arr = this.state.docs;
-        arr.push(20)
+    handleCreate(e){
+        let arr = this.state.items;
+        arr.push(this.state.value)
         this.setState({
-            docs: arr
+            items: arr
         })
+        e.preventDefault();
     }
 
     handleRead(){
         alert("Handling Read Document");
+        // This encompasses read from API and also filter based on search
     }
 
-    handleUpdate(){
-        alert("Handling Update Document");
+    handleUpdate(id, e){
+        console.log("Handling Update Document" + id.toString());
     }
 
-    handleDelete(){
-        alert("Handling Delete Document");
+    handleDelete(id, e){
+        console.log("Handling Delete Document" + id.toString());
     }
 
-    componentWillMount(){
+    handleChange(e){
         this.setState({
-            name: "Show Drawing"
+            value: this.refs.add.value,
+            value2: this.refs.filter.value
         })
     }
 
+    handleFilter(e){
+        let filtered = this.state.items.filter( obj => obj > this.refs.filter.value);
+        this.setState({
+            items: filtered
+        })
+        e.preventDefault();
+    }
+
+    handleResetFilter(e){
+        this.setState(
+            {
+                items: this.props.docs
+            }
+        )
+        e.preventDefault();
+    }
+    componentWillMount(){
+        // fetch('http://swapi.co/api/people/?format=json')
+        //     .then( response => response.json())
+        //     .then( data => {})
+    }
+    enableEditMode(){
+        console.log("Enable edit mode");
+    }
     render() {
+        let styles = {
+            editbutton: {
+                float: 'right'
+            },
+            deleteButton: {
+                float: 'right'
+            }
+        };
+
         return (
             <div>
                 <h3>Document List</h3>
-                <ul>
-                    {this.props.docs.map((item)=>{return <li key={item.toString()}>{item}</li>})}
-                </ul>
-                <button onClick={this.handleCreate}>Add</button>
+                <ListGroup>
+                    {this.state.items.map((item,index)=>{
+                        return (
+                            <ListGroupItem key={index.toString()}>
+                                <div onDoubleClick={this.enableEditMode.bind(this)}>
+                                {item}    
+                                <button style={styles.editbutton} onClick={(event) => this.handleUpdate(index, event)}>Edit</button>
+                                <button style={styles.deleteButton} onClick={this.handleDelete.bind(this, index)}>Delete</button>
+                                </div>
+                                
+                            </ListGroupItem>
+                        );
+                    })}
+                </ListGroup>
+                <form>
+                    <input type="text" ref="add" onChange={this.handleChange} />
+                    <button onClick={this.handleCreate}>Add</button>
+                </form>
+                <form>
+                    <input type="text" ref="filter" onChange={this.handleChange} />
+                    <button onClick={this.handleFilter}>Search</button>
+                    <button onClick={this.handleResetFilter}>Reset</button>
+                </form>
             </div>
         );
     }
