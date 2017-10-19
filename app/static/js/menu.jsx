@@ -84,7 +84,7 @@ export class Documents extends React.Component {
 
     handleCreate(e){
         let arr = this.state.items;
-        arr.push(this.state.value)
+        arr.push(Number(this.state.value))
         this.setState({
             items: arr
         })
@@ -102,6 +102,12 @@ export class Documents extends React.Component {
 
     handleDelete(id, e){
         console.log("Handling Delete Document" + id.toString());
+        let items = this.state.items;
+        console.log(items);
+        let temp = items.splice(id, 1);
+        this.setState({
+            items: items
+        })
     }
 
     handleChange(e){
@@ -120,9 +126,12 @@ export class Documents extends React.Component {
     }
 
     handleResetFilter(e){
+        console.log("handleResetFilter");
+        console.log(this.props.items);
         this.setState(
             {
                 items: this.props.docs
+                //items: [1,3,4,5,6,7,8,10,2]
             }
         )
         e.preventDefault();

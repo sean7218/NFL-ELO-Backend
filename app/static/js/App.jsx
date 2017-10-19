@@ -80,7 +80,6 @@ export default class App extends React.Component {
           </MuiThemeProvider>
           <Welcome />
           <Menu name="Sean Zhang" />
-          <Boards numbers={numbers} />
           <Documents />
       </div>
 
