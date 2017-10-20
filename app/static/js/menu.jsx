@@ -71,7 +71,8 @@ export class Documents extends React.Component {
             name: "",
             desc: "",
             rev: 1.0,
-            items: this.props.docs
+            items: this.props.docs,
+            isEditing: false
         };
         this.handleCreate = this.handleCreate.bind(this);
         this.handleRead = this.handleRead.bind(this);
@@ -98,6 +99,13 @@ export class Documents extends React.Component {
 
     handleUpdate(id, e){
         console.log("Handling Update Document" + id.toString());
+        if(this.state.isEditing){
+            console.log("Updating the input right now");
+            console.log(this.refs.editBox.value);
+        }
+        this.setState({
+            isEditing: !this.state.isEditing
+        })
     }
 
     handleDelete(id, e){
@@ -143,6 +151,9 @@ export class Documents extends React.Component {
     }
     enableEditMode(){
         console.log("Enable edit mode");
+        this.setState({
+            isEditing: true
+        })
     }
     render() {
         let styles = {
@@ -153,7 +164,13 @@ export class Documents extends React.Component {
                 float: 'right'
             }
         };
-
+        let isEditing = this.state.isEditing;
+        let inputBox = null;
+        if (isEditing){
+            inputBox = null
+        } else {
+            inputBox = <EditBox doc="something right now"/> 
+        }
         return (
             <div>
                 <h3>Document List</h3>
@@ -162,7 +179,8 @@ export class Documents extends React.Component {
                         return (
                             <ListGroupItem key={index.toString()}>
                                 <div onDoubleClick={this.enableEditMode.bind(this)}>
-                                {item}    
+                                {isEditing ? <a></a> : item} 
+                                {isEditing ? <EditBox doc={index.toString()} /> : <a></a>}
                                 <button style={styles.editbutton} onClick={(event) => this.handleUpdate(index, event)}>Edit</button>
                                 <button style={styles.deleteButton} onClick={this.handleDelete.bind(this, index)}>Delete</button>
                                 </div>
@@ -189,3 +207,9 @@ Documents.defaultProps = {
     color: 'blue',
     docs: [1, 2, 3, 4, 5, 6, 7]
   };
+
+  function EditBox(props) {
+    return (
+      <input type="text" placeholder={props.doc} />
+    );
+  }
