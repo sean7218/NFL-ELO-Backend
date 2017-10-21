@@ -71,50 +71,41 @@ export class Documents extends React.Component {
             name: "",
             desc: "",
             rev: 1.0,
-            items: this.props.docs,
-            isEditing: false
+            docs: this.props.docs,
+            isEditing: false,
+            editBoxes: []
         };
         this.handleCreate = this.handleCreate.bind(this);
-        this.handleRead = this.handleRead.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleFilter = this.handleFilter.bind(this);
-        this.handleResetFilter = this.handleResetFilter.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
     handleCreate(e){
-        let arr = this.state.items;
-        arr.push(Number(this.state.value))
-        this.setState({
-            items: arr
-        })
+        let docs = this.state.docs;
+        docs.push(this.refs.add.value)
+        this.setState({ docs: docs })
         e.preventDefault();
     }
 
-    handleRead(){
-        alert("Handling Read Document");
-        // This encompasses read from API and also filter based on search
-    }
-
     handleUpdate(id, e){
-        console.log("Handling Update Document" + id.toString());
+        let docs = this.state.docs;
+        docs[id] = e.target.value;
+        console.log(e.target);
         if(this.state.isEditing){
-            console.log("Updating the input right now");
-            console.log(this.refs.editBox.value);
+            this.setState({docs: docs})
         }
-        this.setState({
-            isEditing: !this.state.isEditing
-        })
+        this.setState({isEditing: !this.state.isEditing})
     }
 
     handleDelete(id, e){
         console.log("Handling Delete Document" + id.toString());
-        let items = this.state.items;
-        console.log(items);
-        let temp = items.splice(id, 1);
+        let docs = this.state.docs;
+        docs.splice(id, 1);
         this.setState({
-            items: items
+            docs: docs
         })
     }
 
@@ -125,30 +116,19 @@ export class Documents extends React.Component {
         })
     }
 
-    handleFilter(e){
-        let filtered = this.state.items.filter( obj => obj > this.refs.filter.value);
+    handleSearch(e){
+        let filtered = this.state.docs.filter( obj => obj == this.refs.filter.value);
         this.setState({
-            items: filtered
+            docs: filtered
         })
         e.preventDefault();
     }
 
-    handleResetFilter(e){
-        console.log("handleResetFilter");
-        console.log(this.props.items);
-        this.setState(
-            {
-                items: this.props.docs
-                //items: [1,3,4,5,6,7,8,10,2]
-            }
-        )
+    handleReset(e){
+        this.setState({ docs: [1,3,4,5,6,7,8,10,2]})
         e.preventDefault();
     }
-    componentWillMount(){
-        // fetch('http://swapi.co/api/people/?format=json')
-        //     .then( response => response.json())
-        //     .then( data => {})
-    }
+
     enableEditMode(){
         console.log("Enable edit mode");
         this.setState({
@@ -165,26 +145,19 @@ export class Documents extends React.Component {
             }
         };
         let isEditing = this.state.isEditing;
-        let inputBox = null;
-        if (isEditing){
-            inputBox = null
-        } else {
-            inputBox = <EditBox doc="something right now"/> 
-        }
         return (
             <div>
                 <h3>Document List</h3>
                 <ListGroup>
-                    {this.state.items.map((item,index)=>{
+                    {this.state.docs.map((item,index)=>{
                         return (
                             <ListGroupItem key={index.toString()}>
                                 <div onDoubleClick={this.enableEditMode.bind(this)}>
-                                {isEditing ? <a></a> : item} 
-                                {isEditing ? <EditBox doc={index.toString()} /> : <a></a>}
-                                <button style={styles.editbutton} onClick={(event) => this.handleUpdate(index, event)}>Edit</button>
+                                {isEditing ? <a></a> : item.toString()}
+                                {isEditing ? <EditBox doc={item.toString()} onkeypress={console.log("onChange"+index.toString())}/> : <a></a>}
+                                <button style={styles.editbutton} onClick={this.handleUpdate.bind(index, this)}>Edit</button>
                                 <button style={styles.deleteButton} onClick={this.handleDelete.bind(this, index)}>Delete</button>
                                 </div>
-                                
                             </ListGroupItem>
                         );
                     })}
@@ -195,8 +168,8 @@ export class Documents extends React.Component {
                 </form>
                 <form>
                     <input type="text" ref="filter" onChange={this.handleChange} />
-                    <button onClick={this.handleFilter}>Search</button>
-                    <button onClick={this.handleResetFilter}>Reset</button>
+                    <button onClick={this.handleSearch}>Search</button>
+                    <button onClick={this.handleReset}>Reset</button>
                 </form>
             </div>
         );
