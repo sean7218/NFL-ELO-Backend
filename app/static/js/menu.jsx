@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 
+
 export class Welcome extends React.Component {
     render() {
         return (
@@ -161,6 +162,7 @@ export class Documents extends React.Component {
                             </ListGroupItem>
                         );
                     })}
+                    <Doc uuid="2231" name="hllo" />
                 </ListGroup>
                 <form>
                     <input type="text" ref="add" onChange={this.handleChange} />
@@ -186,3 +188,44 @@ Documents.defaultProps = {
       <input type="text" placeholder={props.doc} />
     );
   }
+
+class Doc extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isEditing: false,
+            name: this.props.name,
+            description: "",
+            revision: 0
+        }
+    }
+    handleUpdate(){
+        let val = inputBox2231
+        this.setState({name: this.refs.val.value})
+    }
+    handleDelete(){
+
+    }
+    render(){
+        let styles = {
+            editbutton: {
+                float: 'right'
+            },
+            deleteButton: {
+                float: 'right'
+            }
+        };
+        return(
+            <div>
+                <ListGroupItem key={this.props.uuid}>
+                    <div>
+                        {this.state.name}
+                        <input style={styles.editbutton} type="text" ref={"inputBox"+this.props.uuid} />
+                        <button style={styles.editbutton} onClick={this.handleUpdate.bind(this)}>Edit</button>
+                        <button style={styles.deleteButton} onClick={this.handleDelete.bind(this)}>Delete</button>
+                    </div>
+                </ListGroupItem>
+            </div>
+        );
+    }
+}
