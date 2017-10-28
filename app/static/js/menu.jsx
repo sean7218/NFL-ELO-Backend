@@ -162,7 +162,8 @@ export class Documents extends React.Component {
                             </ListGroupItem>
                         );
                     })}
-                    <Doc uuid="2231" name="hllo" />
+                    <Doc uuid="2231" name="V17498-ICND-0001" />
+                    <Doc uuid="1223" name="V17498-INCD-0002" />
                 </ListGroup>
                 <form>
                     <input type="text" ref="add" onChange={this.handleChange} />
@@ -199,13 +200,12 @@ class Doc extends React.Component {
             revision: 0
         }
     }
-    handleUpdate(){
-        let val = inputBox2231
-        this.setState({name: this.refs.val.value})
-    }
-    handleDelete(){
+    handleUpdate(uuid){
+        console.log(uuid)
 
+        this.setState({name: "something new"})
     }
+
     render(){
         let styles = {
             editbutton: {
@@ -220,9 +220,8 @@ class Doc extends React.Component {
                 <ListGroupItem key={this.props.uuid}>
                     <div>
                         {this.state.name}
-                        <input style={styles.editbutton} type="text" ref={"inputBox"+this.props.uuid} />
-                        <button style={styles.editbutton} onClick={this.handleUpdate.bind(this)}>Edit</button>
-                        <button style={styles.deleteButton} onClick={this.handleDelete.bind(this)}>Delete</button>
+                        <button style={styles.editbutton} onClick={this.handleUpdate.bind(this, this.props.uuid)}>Edit</button>
+                        <button style={styles.deleteButton}>Delete</button>
                     </div>
                 </ListGroupItem>
             </div>
