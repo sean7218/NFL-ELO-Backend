@@ -86,7 +86,10 @@ export default class App extends React.Component {
           <Console />
           <Panel />
           <MuiThemeProvider>
-            <DocumentCard />
+            <div>
+              <DocumentCard />
+              <DocumentCard />
+            </div>
           </MuiThemeProvider>
       </div>
 

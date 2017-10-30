@@ -11,12 +11,9 @@ export const DocumentCard = () => (
       <CardHeader
         title="V17498-ICND-0001"
         subtitle="PID Diagram"
-        avatar=""
+        avatar="../"
       />
-      <CardMedia
-        overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-      >
-        <img src="" alt="" />
+      <CardMedia>
       </CardMedia>
       <CardTitle title="V17498-ICND-0001" subtitle="Control System PID Diagram" />
       <CardText>
