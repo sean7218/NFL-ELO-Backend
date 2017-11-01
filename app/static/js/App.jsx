@@ -80,17 +80,7 @@ export default class App extends React.Component {
           <MuiThemeProvider>
             <Appbar />
           </MuiThemeProvider>
-          <Welcome />
-          <Menu name="Sean Zhang" />
           <Documents />
-          <Console />
-          <Panel />
-          <MuiThemeProvider>
-            <div>
-              <DocumentCard />
-              <DocumentCard />
-            </div>
-          </MuiThemeProvider>
       </div>
 
     );

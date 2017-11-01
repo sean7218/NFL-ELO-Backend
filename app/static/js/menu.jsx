@@ -136,6 +136,10 @@ export class Documents extends React.Component {
             isEditing: true
         })
     }
+
+    updateName(newName){
+        this.setState({name: newName})
+    }
     render() {
         let styles = {
             editbutton: {
@@ -152,18 +156,9 @@ export class Documents extends React.Component {
                 <ListGroup>
                     {this.state.docs.map((item,index)=>{
                         return (
-                            <ListGroupItem key={index.toString()}>
-                                <div onDoubleClick={this.enableEditMode.bind(this)}>
-                                {isEditing ? <a></a> : item.toString()}
-                                {isEditing ? <EditBox doc={item.toString()} onkeypress={console.log("onChange"+index.toString())}/> : <a></a>}
-                                <button style={styles.editbutton} onClick={this.handleUpdate.bind(index, this)}>Edit</button>
-                                <button style={styles.deleteButton} onClick={this.handleDelete.bind(this, index)}>Delete</button>
-                                </div>
-                            </ListGroupItem>
+                            <Doc name={item} uuid={index} />
                         );
                     })}
-                    <Doc uuid="2231" name="V17498-ICND-0001" />
-                    <Doc uuid="1223" name="V17498-INCD-0002" />
                 </ListGroup>
                 <form>
                     <input type="text" ref="add" onChange={this.handleChange} />
@@ -184,26 +179,16 @@ Documents.defaultProps = {
     docs: [1, 2, 3, 4, 5, 6, 7]
   };
 
-  function EditBox(props) {
-    return (
-      <input type="text" placeholder={props.doc} />
-    );
-  }
-
 class Doc extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            isEditing: false,
             name: this.props.name,
-            description: "",
-            revision: 0
         }
     }
-    handleUpdate(uuid){
-        console.log(uuid)
 
-        this.setState({name: "something new"})
+    updateName(){
+        this.props.updateName("NewNameHAHAHA")
     }
 
     render(){
@@ -217,10 +202,10 @@ class Doc extends React.Component {
         };
         return(
             <div>
-                <ListGroupItem key={this.props.uuid}>
+                <ListGroupItem key={props.uuid}>
                     <div>
                         {this.state.name}
-                        <button style={styles.editbutton} onClick={this.handleUpdate.bind(this, this.props.uuid)}>Edit</button>
+                        <button style={styles.editbutton} onClick={this.updateName}>Edit</button>
                         <button style={styles.deleteButton}>Delete</button>
                     </div>
                 </ListGroupItem>
