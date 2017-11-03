@@ -6,56 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 
-
-export class Welcome extends React.Component {
-    render() {
-        return (
-            <h1>Hello, World!</h1>
-        );
-    }
-}
-
-// An Example of Functional Component
-export const Menu = (props) => {
-    return (
-        <p>Sport Prediction Site by {props.name}</p>
-    );
-}
-
-export const Boards = (props) => {
-    const numbers = props.numbers;
-    const listItems = numbers.map((number) =>
-      <li key={number.toString()}>{number}</li>
-    );
-    return (
-      <ul>{listItems}</ul>
-    );
-}
-
-export const NavbarInstance = (props) => { 
-    return (
-      <Navbar>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="#">Sports Prediction</a>
-          </Navbar.Brand>
-        </Navbar.Header>
-        <Nav>
-          <NavItem eventKey={1} href="#">NBA</NavItem>
-          <NavItem eventKey={2} href="#">NFL</NavItem>
-          <NavDropdown eventKey={3} title="Menu" id="basic-nav-dropdown">
-            <MenuItem eventKey={3.1}>Login</MenuItem>
-            <MenuItem eventKey={3.2}>Register</MenuItem>
-            <MenuItem eventKey={3.3}>Profile</MenuItem>
-            <MenuItem divider />
-            <MenuItem eventKey={3.4}>Separated link</MenuItem>
-          </NavDropdown>
-        </Nav>
-      </Navbar>
-    );
-  }
-
-
 export const Appbar = () => {
     return (
         <AppBar
@@ -83,14 +33,12 @@ export class Documents extends React.Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleReset = this.handleReset.bind(this);
     }
-
     handleCreate(e){
         let docs = this.state.docs;
         docs.push(this.refs.add.value)
         this.setState({ docs: docs })
         e.preventDefault();
     }
-
     handleUpdate(id, e){
         let docs = this.state.docs;
         docs[id] = e.target.value;
@@ -100,7 +48,6 @@ export class Documents extends React.Component {
         }
         this.setState({isEditing: !this.state.isEditing})
     }
-
     handleDelete(id, e){
         console.log("Handling Delete Document" + id.toString());
         let docs = this.state.docs;
@@ -109,14 +56,12 @@ export class Documents extends React.Component {
             docs: docs
         })
     }
-
     handleChange(e){
         this.setState({
             value: this.refs.add.value,
             value2: this.refs.filter.value
         })
     }
-
     handleSearch(e){
         let filtered = this.state.docs.filter( obj => obj == this.refs.filter.value);
         this.setState({
@@ -124,19 +69,16 @@ export class Documents extends React.Component {
         })
         e.preventDefault();
     }
-
     handleReset(e){
         this.setState({ docs: [1,3,4,5,6,7,8,10,2]})
         e.preventDefault();
     }
-
     enableEditMode(){
         console.log("Enable edit mode");
         this.setState({
             isEditing: true
         })
     }
-
     updateName(newName){
         this.setState({name: newName})
     }
